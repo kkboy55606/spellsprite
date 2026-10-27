@@ -1,0 +1,122 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Pixel FX Studio</title>
+  <meta name="description" content="自製像素特效工坊：輸入文字或從特效庫挑選，調整後下載精靈圖、GIF、MP4 或 Godot 資源。">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 8 8' shape-rendering='crispEdges'%3E%3Crect x='3' y='0' width='2' height='8' fill='%2335e0c2'/%3E%3Crect x='0' y='3' width='8' height='2' fill='%2335e0c2'/%3E%3Crect x='3' y='3' width='2' height='2' fill='%23fff'/%3E%3C/svg%3E">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <header class="top">
+    <canvas id="logo" aria-label="Pixel FX Studio"></canvas>
+    <span class="tag">自製像素特效工坊</span>
+    <div class="spacer"></div>
+    <button id="btn-share" class="ghost">分享連結</button>
+    <button id="btn-help" class="ghost">說明</button>
+  </header>
+
+  <main class="layout">
+    <aside class="lib">
+      <div class="search"><input id="lib-search" type="search" placeholder="搜尋特效" autocomplete="off"></div>
+      <nav id="lib-groups" class="chips-row"></nav>
+      <div id="lib-grid" class="lib-grid"></div>
+    </aside>
+
+    <section class="center">
+      <div class="prompt-bar">
+        <span class="spark" aria-hidden="true">✦</span>
+        <input id="prompt" type="text" autocomplete="off" spellcheck="false" placeholder="描述特效，例如：紫色黑洞漩渦、巨大火焰爆炸、fire tornado">
+        <button id="btn-dice" class="icon" title="隨機範例" aria-label="隨機範例"></button>
+        <button id="btn-go" class="accent">生成</button>
+      </div>
+      <div class="readas" id="readas"></div>
+
+      <div class="card stage-card">
+        <div class="stage-head">
+          <div class="title">
+            <h2 id="fx-name">—</h2>
+            <div id="fx-meta" class="meta"></div>
+          </div>
+          <div class="spacer"></div>
+          <div class="seg" id="view-seg"><button data-v="stage">舞台</button><button data-v="effect">僅特效</button></div>
+          <div class="bg-swatches" id="bg-swatches"></div>
+          <button id="btn-stage-setup" class="ghost small">舞台設定</button>
+        </div>
+        <div class="stage-wrap" id="stage-wrap">
+          <canvas id="view"></canvas>
+          <div id="stage-hint" class="hint">可拖曳角色調整位置</div>
+        </div>
+        <div class="timeline">
+          <button id="btn-play" class="icon" aria-label="播放 / 暫停"></button>
+          <span id="frame-no" class="mono">01/16</span>
+          <div id="strip" class="strip"></div>
+          <div class="seg small" id="speed-seg"><button data-s="0.5">½×</button><button data-s="1">1×</button><button data-s="2">2×</button></div>
+        </div>
+      </div>
+
+      <div class="vars-head"><span>更多變化</span><button id="btn-remix" class="ghost small">重抽</button></div>
+      <div id="vars" class="vars"></div>
+    </section>
+
+    <aside class="insp">
+      <div id="inspector" class="insp-scroll"></div>
+      <div class="insp-foot"><button id="btn-download" class="accent big">下載</button></div>
+    </aside>
+  </main>
+
+  <footer class="foot">
+    <span><b>Pixel FX Studio</b> · 引擎、特效庫、場景與角色皆為本專案自製</span>
+    <span class="spacer"></span>
+    <span id="engine-note" class="muted"></span>
+  </footer>
+
+  <dialog id="dlg-paste" class="dlg">
+    <form method="dialog">
+      <h3>貼上配方 JSON</h3>
+      <textarea id="paste-text" rows="14" spellcheck="false" placeholder='{"format":"pfx/1", "layers":[...]}'></textarea>
+      <p id="paste-err" class="err"></p>
+      <div class="row end"><button value="cancel" class="ghost">取消</button><button id="paste-ok" value="ok" class="accent">載入</button></div>
+    </form>
+  </dialog>
+
+  <dialog id="dlg-stage" class="dlg">
+    <form method="dialog">
+      <h3>舞台設定</h3>
+      <p class="muted">上傳自己的像素圖。沒有透明背景的圖會自動去背；太大的圖會用整數倍縮小，保持像素清晰。</p>
+      <div class="upload-row"><span>施法者</span><input type="file" id="up-caster" accept="image/*"><button type="button" class="ghost small" data-reset="caster">還原</button></div>
+      <div class="upload-row"><span>目標</span><input type="file" id="up-target" accept="image/*"><button type="button" class="ghost small" data-reset="target">還原</button></div>
+      <div class="upload-row"><span>背景</span><input type="file" id="up-bg" accept="image/*"><button type="button" class="ghost small" data-reset="bg">還原</button></div>
+      <p class="muted">提示：角色和特效的像素密度一致最好看，例如 32–96 px 高的角色配 64×64 的特效。</p>
+      <div class="row end"><button value="close" class="accent">完成</button></div>
+    </form>
+  </dialog>
+
+  <dialog id="dlg-download" class="dlg wide">
+    <form method="dialog" id="dl-form">
+      <h3>下載 <span id="dl-name" class="muted"></span></h3>
+      <div id="dl-body"></div>
+      <div class="row end"><button value="close" class="ghost">關閉</button></div>
+    </form>
+  </dialog>
+
+  <dialog id="dlg-help" class="dlg">
+    <form method="dialog">
+      <h3>怎麼用</h3>
+      <ol class="help">
+        <li>從左側特效庫挑一個，或在上方輸入描述（中文、英文都可以），例如「巨大紫色雷電新星」「冰刺從地面竄出」「sword slash then explosion」。</li>
+        <li>「解讀為」那一行顯示程式怎麼理解你的字：形態、元素、顏色與修飾詞（大小、快慢、密度、循環、描邊、抖色、色盤、方向）。</li>
+        <li>右側面板可以改色帶、色相、色盤鎖定、描邊、幀數、速度、解析度，以及每個圖層的參數。</li>
+        <li>舞台設定可上傳自己的角色與背景；角色可以直接在舞台上拖曳。</li>
+        <li>下載可以拿到精靈圖 PNG、GIF、atlas JSON、Godot 4 .tres、MP4，或一次打包的 ZIP。</li>
+        <li>「分享連結」會把目前的設定存進網址。</li>
+      </ol>
+      <div class="row end"><button value="close" class="accent">知道了</button></div>
+    </form>
+  </dialog>
+
+  <div id="toast" role="status" aria-live="polite"></div>
+  <script type="module" src="src/app/main.js"></script>
+</body>
+</html>

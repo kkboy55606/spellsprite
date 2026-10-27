@@ -1,0 +1,7 @@
+# Third-party reference material (not part of this project's code)
+scenario-pixel-vfx-skill.zip
+pixel-vfx-forge-making-of.pdf
+
+# Local outputs
+out/
+node_modules/
