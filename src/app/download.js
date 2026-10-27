@@ -41,7 +41,7 @@ function stageFrames(res, stage, bgFill) {
 
 function credit(ctx, W, H) {
   const s = Math.max(2, Math.round(H / 270));
-  const { cells, w, h } = layoutText('MADE WITH PIXEL FX STUDIO', s);
+  const { cells, w, h } = layoutText('MADE WITH SPELLSPRITE', s);
   const x0 = W - w - s * 8, y0 = H - h - s * 6;
   ctx.globalAlpha = 0.75;
   ctx.fillStyle = '#062a24';

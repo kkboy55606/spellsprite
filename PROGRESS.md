@@ -1,8 +1,8 @@
-# PROGRESS — Pixel FX Studio
+# PROGRESS — Spellsprite（原暫定名 Pixel FX Studio）
 
 旗標：`✅ 已實作並驗過`、`🟢 已實作待驗`、`🔒 需外部環境實測`、`⏸ 已延後`
 
-## 現況（S1.2 完成）
+## 現況（S2 改名、上線）
 
 | 項目 | 狀態 | 備註 |
 | --- | --- | --- |
@@ -20,8 +20,15 @@
 | Unity 匯入 | ✅ | Unity 6000.3.23f1 batch mode：依 atlas JSON 切出 18 張 96×96 sprite，1728×96、Point、RGBA32，18 張都有像素 |
 | Godot 4 匯入 | 🔒 | 本機沒有安裝 Godot；`.tres` 依格式產生並有測試，尚未在 Godot 裡開過 |
 | 分享連結 `p` / `fx` / `st` / `r` | ✅ | 瀏覽器實測，`r=` 重新整理後圖層與風格都還原 |
+| 線上版（GitHub Pages） | 🟢 | 部署中，網址 https://kkboy55606.github.io/spellsprite/ |
 
 ## 變更紀錄
+
+- 2026-10-27：**S2 改名 Spellsprite、MIT 授權、準備上線**。
+  決策：Steam 上已有名稱相近的同類工具 Pixel FX Designer，公開前改名；候選 Spellsprite、Heatband、Pixel Kiln、Emberbit 搜尋過無同名像素工具（非商標檢索），使用者選 Spellsprite。授權 MIT（版權人 kkboy55606），整個專案公開，commit 作者信箱維持原本設定（使用者決定）。
+  改動：`index.html` 標題與 logo 標籤、頁尾加原始碼連結；`src/app/main.js` logo 文字；`src/app/download.js` 影片角落標註；`src/export/formats.js` atlas 的 app 名稱與 README 文字；`src/export/mp4.js` hdlr 名稱；`package.json` 名稱與 license；`serve.mjs`、`.claude/launch.json`、`README.md`、`CLAUDE.md`；新增 `LICENSE`。歷史紀錄保留舊名。
+  修正：鍵盤快捷鍵在事件目標是 document 本身時會拋錯（有些擴充功能會這樣送事件）→ 用 `closest?.()`；尚未載入特效時也不處理。app 層沒有 DOM 測試環境，改以瀏覽器實測：對 document 送空白鍵與方向鍵，0 個新錯誤、空白鍵正確暫停。
+  驗收：`npm test` 45 條全綠。配方格式與分享連結參數未變動。
 
 - 2026-10-27：**S1.2 第二批偏弱特效調亮調清楚**。全部 44 個用 `tools/fx-metrics.mjs` 量過後挑出：森羅治癒、心動回復（亮色像素只有 3–6%）、亮晶晶、聖輝加持（只佔畫布 7–8%）、疾風衝刺（線太細）、夏夜螢火（只有單點）。
   修正：`streaks` 圖層預設角度是爪痕用的 55°，衝刺的速度線和疾風的風弧沒有覆寫，結果全部斜的 → 兩個形態與風元素的點綴層都明確設 `angle: 0`（只改形態參數，引擎與配方格式不動）。

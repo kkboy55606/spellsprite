@@ -1,4 +1,4 @@
-// Pixel FX Studio engine. A recipe goes in, RGBA frames come out.
+// Spellsprite engine. A recipe goes in, RGBA frames come out.
 // Each layer paints a heat field on its own surface; the heat is cut into hard
 // colour bands from the layer's ramp and composited. The finished frame then
 // gets clean-up, outline and palette-lock passes. No DOM: runs in the page, in

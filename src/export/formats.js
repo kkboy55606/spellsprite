@@ -45,7 +45,7 @@ export function atlasJSON(stem, L, n, { fps, loop, impact, pivot, scale = 1 }) {
   return JSON.stringify({
     frames,
     meta: {
-      app: 'Pixel FX Studio', version: '1', image: `${stem}.png`, format: 'RGBA8888',
+      app: 'Spellsprite', version: '1', image: `${stem}.png`, format: 'RGBA8888',
       size: { w: L.cols * L.w * scale, h: L.rows * L.h * scale }, scale: String(scale),
       frameTags: [{ name: stem, from: 0, to: n - 1, direction: 'forward' }],
       fps, loop, impactFrame: impact, pivot,
@@ -65,7 +65,7 @@ export function godotTres(stem, L, n, { fps, loop, scale = 1 }) {
 }
 
 export function readme(stem, { name, w, h, n, fps, loop, impact, pivot }) {
-  return `${name} — Pixel FX Studio
+  return `${name} — Spellsprite
 
 ${n} 幀 · ${w}x${h} px · ${fps} fps · ${loop ? '循環' : '單次'}${impact != null ? ` · 命中幀 ${impact}` : ''}
 錨點 (pivot)：${pivot[0]}, ${pivot[1]}（0–1，相對畫布）
@@ -76,7 +76,7 @@ ${n} 幀 · ${w}x${h} px · ${fps} fps · ${loop ? '循環' : '單次'}${impact 
   ${stem}.tres           Godot 4 SpriteFrames（貼圖路徑 res://${stem}.png，放別處要改路徑）
   ${stem}@1x.gif / @4x.gif
   frames/                單張影格
-  ${stem}.recipe.json    配方，可在 Pixel FX Studio 用「貼上配方」載回
+  ${stem}.recipe.json    配方，可在 Spellsprite 用「貼上 JSON」載回
 
 Godot 4：把 png 與 tres 放進專案，AnimatedSprite2D 的 Sprite Frames 指到 tres，
   Texture Filter 設成 Nearest。

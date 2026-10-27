@@ -2,7 +2,7 @@
   "version": "0.0.1",
   "configurations": [
     {
-      "name": "pixel-fx-studio",
+      "name": "spellsprite",
       "runtimeExecutable": "node",
       "runtimeArgs": ["serve.mjs"],
       "port": 5178

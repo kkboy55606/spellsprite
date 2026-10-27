@@ -1,5 +1,5 @@
 #!/usr/bin/env node
-// Tiny static server for Pixel FX Studio. Module workers need http://, not file://.
+// Tiny static server for Spellsprite. Module workers need http://, not file://.
 import http from 'node:http';
 import fs from 'node:fs';
 import path from 'node:path';
@@ -22,4 +22,4 @@ http.createServer((req, res) => {
     res.writeHead(200, { 'content-type': TYPES[path.extname(file)] || 'application/octet-stream', 'cache-control': 'no-cache' });
     fs.createReadStream(file).pipe(res);
   });
-}).listen(port, () => console.log(`Pixel FX Studio: http://localhost:${port}`));
+}).listen(port, () => console.log(`Spellsprite: http://localhost:${port}`));

@@ -1,4 +1,4 @@
-// Pixel FX Studio: page wiring. State lives here; rendering happens in workers
+// Spellsprite: page wiring. State lives here; rendering happens in workers
 // (render-client.js); the stage composes effects onto the scene (stage.js).
 
 import { Renderer } from './render-client.js';
@@ -510,7 +510,7 @@ function buildBgSwatches() {
   }));
 }
 document.addEventListener('keydown', (e) => {
-  if (e.target.closest('input, textarea, select, dialog')) return;
+  if (!state.result || e.target.closest?.('input, textarea, select, dialog')) return;
   if (e.key === ' ') { e.preventDefault(); setPlaying(!state.playing); }
   else if (e.key === 'ArrowRight' || e.key === 'ArrowLeft') {
     setPlaying(false);
@@ -522,7 +522,7 @@ document.addEventListener('keydown', (e) => {
 
 function drawLogo() {
   const c = $('logo');
-  const { cells, w, h } = layoutText('PIXEL FX STUDIO', 2);
+  const { cells, w, h } = layoutText('SPELLSPRITE', 2);
   c.width = w + 4; c.height = h + 4;
   const g = c.getContext('2d');
   const grad = ['#eafffa', '#9ff7e6', '#35e0c2', '#1fb39b', '#14806f'];

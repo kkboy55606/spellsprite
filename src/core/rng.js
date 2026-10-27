@@ -1,4 +1,4 @@
-// Seeded randomness. Everything random in Pixel FX Studio goes through here so
+// Seeded randomness. Everything random in Spellsprite goes through here so
 // the same recipe and seed always give identical frames.
 
 // 32-bit integer hash (murmur3 finaliser).

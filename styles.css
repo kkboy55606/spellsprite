@@ -165,6 +165,7 @@ progress { width: 100%; accent-color: var(--accent); }
 
 .foot { display: flex; gap: 10px; align-items: center; padding: 8px 16px; border-top: 1px solid var(--line); background: var(--panel); font-size: 12.5px; color: var(--muted); }
 .foot b { color: var(--text); }
+.foot a { color: var(--accent); }
 
 @media (max-width: 1180px) {
   .layout { grid-template-columns: 240px minmax(0, 1fr) 290px; }

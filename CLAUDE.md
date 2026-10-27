@@ -1,4 +1,4 @@
-# Pixel FX Studio — 專案規則
+# Spellsprite — 專案規則
 
 ## 凍結契約
 

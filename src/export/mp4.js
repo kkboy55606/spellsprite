@@ -34,7 +34,7 @@ export function buildMP4({ width, height, timescale, samples, avcC }) {
       full('tkhd', 0, 3, u32(0), u32(0), u32(1), u32(0), u32(ms), zeros(8), u16(0), u16(0), u16(0), u16(0), MATRIX, u32(width << 16), u32(height << 16)),
       box('mdia',
         full('mdhd', 0, 0, u32(0), u32(0), u32(timescale), u32(total), u16(0x55c4), u16(0)),
-        full('hdlr', 0, 0, u32(0), fourcc('vide'), zeros(12), fourcc('PixelFXStudio'), u8(0)),
+        full('hdlr', 0, 0, u32(0), fourcc('vide'), zeros(12), fourcc('Spellsprite'), u8(0)),
         box('minf',
           full('vmhd', 0, 1, zeros(8)),
           box('dinf', full('dref', 0, 0, u32(1), full('url ', 0, 1))),
