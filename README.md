@@ -21,7 +21,8 @@ npm test
 ```
 
 - `node tools/contact-sheet.mjs kinds` — 把 22 種圖層各自渲染成一張接觸表（`out/sheet-kinds.png`），用眼睛檢查
-- `node tools/contact-sheet.mjs library 0-22` — 渲染特效庫的一段
+- `node tools/contact-sheet.mjs library 0-22` — 渲染特效庫的一段（也可以寫 id：`library shadow-aura,coin-burst`）
+- `node tools/fx-metrics.mjs [id ...]` — 量特效的覆蓋率、亮度、亮色比例與分離團塊數，調外觀時用來比較前後
 - `node tools/contact-sheet.mjs prompt "紫色黑洞漩渦"` — 看一句描述會變成什麼
 - `node tools/stage-preview.mjs` — 預覽內建場景與角色
 - `node tools/gen-recipe-doc.mjs` — 改了圖層參數後重新產生 `docs/recipe.md` 的表格

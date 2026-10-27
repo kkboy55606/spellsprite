@@ -112,8 +112,8 @@ export const FORMS = {
   slash: F({ label: '斬擊', en: 'Slash', el: 'steel', size: [64, 64], frames: 12, fps: 18, place: 'target', facing: true, focus: [0.5, 0.4],
     zh: ['斬擊', '劍氣', '刀光', '揮砍', '斬', '劈', '砍', '劍', '刀'], words: ['slash', 'slice', 'cut', 'sword', 'blade', 'swing', 'cleave', 'katana', 'saber'],
     build: (c) => [
-      { kind: 'slash', color: '@main', r: 0.74, th: 0.26, a0: -160, a1: 40, sweep: 0.32 },
-      { kind: 'slash', color: '@spark', r: 0.56, th: 0.1, a0: -150, a1: 30, from: 0.04, sweep: 0.3, gain: 0.9 },
+      { kind: 'slash', color: '@main', r: 0.76, th: 0.32, a0: -160, a1: 40, sweep: 0.32, gain: 1.1, glow: 1 },
+      { kind: 'slash', color: '@spark', r: 0.58, th: 0.12, a0: -150, a1: 30, from: 0.04, sweep: 0.3, gain: 1.2 },
       { kind: 'particles', color: '@spark', mode: 'burst', count: c.k(8), x: 0.55, y: 0.45, dir: 130, spread: 70, speed: [1, 2], drag: 2, shape: 'streak', life: [0.3, 0.6], from: 0.2 },
     ] }),
   hit: F({ label: '打擊火花', en: 'Hit Spark', el: 'gold', size: [48, 48], frames: 10, fps: 18, place: 'target', focus: [0, 0],
@@ -171,7 +171,8 @@ export const FORMS = {
   aura: F({ label: '氣場', en: 'Aura', el: 'fire', size: [64, 64], frames: 12, fps: 12, loop: true, place: 'caster-ground', pivot: [0.5, 0.9], depth: 'back', focus: [0, 0.1],
     zh: ['氣場', '鬥氣', '覺醒', '霸氣', '光環', '氣息'], words: ['aura', 'power up', 'powerup', 'rage', 'awaken', 'super saiyan', 'ki'],
     build: (c) => [
-      { kind: 'flame', color: '@main', y: 0.8, w: 0.62, hgt: 1.55, hollow: 0.9, rough: 0.8, speed: 2, gain: 0.95 },
+      { kind: 'flame', color: '@main', y: 0.8, w: 0.72, hgt: 1.6, hollow: 0.9, rough: 0.85, speed: 2, gain: 1.8 },
+      { kind: 'flame', color: '@alt', y: 0.82, w: 0.6, hgt: 1.15, hollow: 1, rough: 0.7, speed: 2, gain: 1.3, seed: 5, blend: 'under' },
       { kind: 'particles', color: '@spark', mode: 'rise', count: c.k(10), y: 0.7, area: 0.5, areaX: 1.2, areaY: 0.3, speed: [0.8, 1.4], life: [0.4, 0.8], shape: 'dot', wiggle: 0.05 },
     ] }),
   flame: F({ label: '火苗', en: 'Flame', el: 'fire', size: [48, 64], frames: 12, fps: 12, loop: true, place: 'target-ground', pivot: [0.5, 0.88], focus: [0, 0.2],
@@ -278,7 +279,7 @@ export const FORMS = {
   breath: F({ label: '吐息', en: 'Breath', el: 'fire', size: [96, 48], frames: 12, fps: 15, loop: true, place: 'staff', pivot: [0.08, 0.5], facing: true, focus: [0.4, 0],
     zh: ['吐息', '噴射', '噴火', '火焰噴射', '噴'], words: ['breath', 'flamethrower', 'spray', 'cone', 'jet', 'stream'],
     build: (c) => [
-      { kind: 'smoke', color: '@main', x: -1.7, count: c.k(12), spread: 0.05, flat: 1, rise: 0.1, r0: 0.08, r1: 0.45, life: [0.5, 0.9], dir: 0, cone: 30, speed: [2.5, 3.5], drift: 0.1, gain: 0.95 },
+      { kind: 'smoke', color: '@main', x: -1.7, count: c.k(24), spread: 0.04, flat: 1, rise: 0.05, r0: 0.12, r1: 0.55, life: [0.85, 1], dir: 0, cone: 22, speed: [2.2, 2.8], drift: 0.05, dissolve: 0.6, decay: 0.55, gain: 1 },
       { kind: 'particles', color: '@spark', mode: 'spray', x: -1.7, dir: 0, spread: 30, speed: [3, 4.5], drag: 0.5, count: c.k(14), shape: 'dot', life: [0.4, 0.8] },
     ] }),
   dash: F({ label: '衝刺', en: 'Dash', el: 'wind', size: [64, 48], frames: 8, fps: 15, loop: true, place: 'caster', depth: 'back', facing: true, focus: [0, 0],
@@ -324,7 +325,7 @@ export const FORMS = {
   loot: F({ label: '掉寶', en: 'Loot', el: 'gold', size: [48, 48], frames: 18, fps: 15, place: 'target-ground', pivot: [0.5, 0.85], focus: [0, 0],
     zh: ['金幣', '掉寶', '拾取', '寶箱', '錢幣'], words: ['coin', 'coins', 'loot', 'pickup', 'reward', 'jackpot'],
     build: (c) => [
-      { kind: 'particles', color: '@main', mode: 'burst', y: 0.4, dir: -90, spread: 80, speed: [1.6, 2.4], gravity: 4.5, drag: 0.3, ground: 0.62, count: c.k(7), shape: 'coin', size: [2, 2], heat: [1, 1], life: [0.9, 1] },
+      { kind: 'particles', color: '@main', mode: 'burst', y: 0.4, dir: -90, spread: 80, speed: [1.6, 2.4], gravity: 4.5, drag: 0.3, ground: 0.62, count: c.k(6), shape: 'coin', size: [3, 3], heat: [1, 1], life: [0.9, 1] },
       { kind: 'flash', color: '@spark', y: 0.4, r: 0.35, dur: 0.1 },
     ] }),
   dissolve: F({ label: '消散', en: 'Dissolve', el: 'spirit', size: [48, 48], frames: 16, fps: 15, place: 'target', focus: [0, 0],
@@ -355,8 +356,9 @@ export const FORMS = {
   splash: F({ label: '水花', en: 'Splash', el: 'water', size: [64, 64], frames: 16, fps: 15, place: 'target-ground', pivot: [0.5, 0.8], focus: [0, 0.4],
     zh: ['水花', '濺', '浪花', '飛濺'], words: ['splash', 'splatter', 'splosh', 'droplets'],
     build: (c) => [
-      { kind: 'ring', color: '@alt', y: 0.6, squash: 0.3, r1: 0.9, th: 0.12 },
-      { kind: 'particles', color: '@main', mode: 'burst', y: 0.55, dir: -90, spread: 70, speed: [1.6, 2.6], gravity: 4, drag: 0.4, count: c.k(14), shape: 'drop' },
+      { kind: 'ring', color: '@alt', y: 0.6, squash: 0.3, r1: 0.95, th: 0.18, breakup: 0.5 },
+      { kind: 'spikes', color: '@main', y: 0.62, count: 7, spread: 0.42, hgt: [0.45, 0.85], width: [0.07, 0.12], fan: 38, lean: 10, grow: 0.14, hold: 0.32 },
+      { kind: 'particles', color: '@main', mode: 'burst', y: 0.5, dir: -90, spread: 80, speed: [1.6, 2.6], gravity: 4, drag: 0.4, count: c.k(16), shape: 'drop', size: [2, 1] },
       { kind: 'particles', color: '@spark', mode: 'burst', y: 0.55, dir: -90, spread: 150, speed: [0.8, 1.4], gravity: 3, count: c.k(8), shape: 'dot' },
     ] }),
 };

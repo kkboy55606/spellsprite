@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 // Render effects onto one grid PNG for judging by eye.
 //   node tools/contact-sheet.mjs kinds          every layer kind alone, default settings
-//   node tools/contact-sheet.mjs library [a-b]  library effects (optionally a slice)
+//   node tools/contact-sheet.mjs library [a-b]  library effects (optionally a slice, or ids: a,b,c)
 //   node tools/contact-sheet.mjs prompt "..."   one prompt
 import fs from 'node:fs';
 import path from 'node:path';
@@ -27,8 +27,10 @@ if (mode === 'kinds') {
   });
 } else if (mode === 'library') {
   const { LIBRARY, recipeFor } = await import('../src/core/library.js');
-  const [a, b] = (arg || `0-${LIBRARY.length}`).split('-').map(Number);
-  rows = LIBRARY.slice(a, b).map((e) => ({ label: e.id, ...render(recipeFor(e)) }));
+  let list;
+  if (arg && /[a-z]/.test(arg)) list = arg.split(',').map((id) => LIBRARY.find((e) => e.id === id)).filter(Boolean);
+  else { const [a, b] = (arg || `0-${LIBRARY.length}`).split('-').map(Number); list = LIBRARY.slice(a, b); }
+  rows = list.map((e) => ({ label: e.id, ...render(recipeFor(e)) }));
 } else if (mode === 'prompt') {
   const { interpret } = await import('../src/core/interpret.js');
   const { recipe, chips } = interpret(arg);

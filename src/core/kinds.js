@@ -127,10 +127,13 @@ function stamp(S, shape, cx, cy, s, h, vx, vy, p, t) {
     }
     case 'chevron': for (let k = 0; k <= s + 1; k++) { P(-k, k, 1 - k * 0.15); P(k, k, 1 - k * 0.15); } break;
     case 'coin': {
+      // Spinning ellipse with a darker rim, so coins read as coins on dark backgrounds.
       const wv = Math.max(0, Math.round(Math.abs(Math.cos(TAU * (t * 2 + p.u))) * s));
+      const inside = (x, y) => (x / (wv + 0.5)) ** 2 + (y / (s + 0.5)) ** 2 <= 1;
       for (let y = -s; y <= s; y++) for (let x = -wv; x <= wv; x++) {
-        if ((x / (wv + 0.5)) ** 2 + (y / (s + 0.5)) ** 2 > 1) continue;
-        P(x, y, x < 0 && y < 0 ? 1.2 : 0.8);
+        if (!inside(x, y)) continue;
+        const rim = wv > 0 && (!inside(x + 1, y) || !inside(x - 1, y) || !inside(x, y + 1) || !inside(x, y - 1));
+        P(x, y, rim ? 0.5 : x <= 0 && y < 0 ? 1.2 : 0.85);
       }
       break;
     }
@@ -246,7 +249,7 @@ export const KINDS = {
         const hx = Math.abs(xs) / wv;
         const n = S.fbm(x * L.freq, y * L.freq + scroll, z, 3, 0, P, pz);
         let h = (1 - hx * hx) * (1.05 - vv * 0.9) + (n - 0.5) * L.rough * 1.4 - vv * 0.15 + Math.max(0, 1 - hx) * (1 - vv) * 0.25;
-        if (L.hollow) h -= L.hollow * Math.max(0, 1 - hx / 0.75) * (1.15 - vv * 0.5);
+        if (L.hollow) h -= L.hollow * smooth(0.85, 0.3, hx) * (1.6 - vv * 0.6);
         return h * env;
       }, Math.max(L.w * 1.6, L.hgt * 1.25));
     },
