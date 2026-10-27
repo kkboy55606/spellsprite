@@ -5,6 +5,7 @@ import assert from 'node:assert/strict';
 import { render } from '../src/core/engine.js';
 import { LIBRARY, recipeFor } from '../src/core/library.js';
 import { metrics } from '../tools/fx-metrics.mjs';
+import { interpret } from '../src/core/interpret.js';
 
 const lib = (id) => render(recipeFor(LIBRARY.find((e) => e.id === id)));
 const lum = (f, i) => 0.2126 * f[i] + 0.7152 * f[i + 1] + 0.0722 * f[i + 2];
@@ -44,4 +45,36 @@ test('dragon breath is one joined stream, not scattered puffs', () => {
 test('splash and slash are big enough to read', () => {
   assert.ok(metrics(lib('torrent-splash')).cover >= 0.09);
   assert.ok(metrics(lib('steel-slash')).cover >= 0.12);
+});
+
+test('heals are light and glowing, not dark tubes', () => {
+  for (const id of ['verdant-heal', 'heart-heal']) {
+    const m = metrics(lib(id));
+    assert.ok(m.lum >= 0.45 && m.bright >= 0.3, `${id}: ${JSON.stringify(m)}`);
+  }
+});
+
+test('sparkle and blessing are big enough to read', () => {
+  for (const id of ['glitter', 'blessing']) assert.ok(metrics(lib(id)).cover >= 0.15, id);
+});
+
+test('speed lines and wind arcs are level (regression: they inherited the 55 degree claw angle)', () => {
+  for (const p of ['dash', 'gust']) {
+    for (const L of interpret(p, 1).recipe.layers.filter((l) => l.kind === 'streaks')) assert.equal(L.angle, 0, `${p}: streaks angle ${L.angle}`);
+  }
+  const res = lib('gale-dash'), f = res.frames[3];
+  let runs = 0;
+  for (let y = 0; y < res.h; y++) {
+    let run = 0;
+    for (let x = 0; x <= res.w; x++) {
+      if (x < res.w && f[(y * res.w + x) * 4 + 3]) run++;
+      else { if (run >= 4) runs++; run = 0; }
+    }
+  }
+  assert.ok(runs >= 8, `only ${runs} horizontal runs`);
+});
+
+test('fireflies are glowing blobs, not single pixels', () => {
+  const res = lib('fireflies'), m = metrics(res);
+  assert.ok((m.cover * res.w * res.h) / m.blobs >= 4, `about ${((m.cover * res.w * res.h) / m.blobs).toFixed(1)} px per mote`);
 });
