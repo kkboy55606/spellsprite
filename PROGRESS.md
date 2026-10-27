@@ -20,7 +20,7 @@
 | Unity 匯入 | ✅ | Unity 6000.3.23f1 batch mode：依 atlas JSON 切出 18 張 96×96 sprite，1728×96、Point、RGBA32，18 張都有像素 |
 | Godot 4 匯入 | 🔒 | 本機沒有安裝 Godot；`.tres` 依格式產生並有測試，尚未在 Godot 裡開過 |
 | 分享連結 `p` / `fx` / `st` / `r` | ✅ | 瀏覽器實測，`r=` 重新整理後圖層與風格都還原 |
-| 線上版（GitHub Pages） | 🟢 | 部署中，網址 https://kkboy55606.github.io/spellsprite/ |
+| 線上版（GitHub Pages） | ✅ | https://kkboy55606.github.io/spellsprite/ ：建置 26 秒完成；瀏覽器實測 HTTPS、4 個背景執行緒、44 個特效庫、舞台播放、無錯誤；線上 MP4 編碼成功（avc1.42E028） |
 
 ## 變更紀錄
 
@@ -29,6 +29,7 @@
   改動：`index.html` 標題與 logo 標籤、頁尾加原始碼連結；`src/app/main.js` logo 文字；`src/app/download.js` 影片角落標註；`src/export/formats.js` atlas 的 app 名稱與 README 文字；`src/export/mp4.js` hdlr 名稱；`package.json` 名稱與 license；`serve.mjs`、`.claude/launch.json`、`README.md`、`CLAUDE.md`；新增 `LICENSE`。歷史紀錄保留舊名。
   修正：鍵盤快捷鍵在事件目標是 document 本身時會拋錯（有些擴充功能會這樣送事件）→ 用 `closest?.()`；尚未載入特效時也不處理。app 層沒有 DOM 測試環境，改以瀏覽器實測：對 document 送空白鍵與方向鍵，0 個新錯誤、空白鍵正確暫停。
   驗收：`npm test` 45 條全綠。配方格式與分享連結參數未變動。
+  上線：建立公開 repo https://github.com/kkboy55606/spellsprite，加 `.nojekyll` 讓 Pages 原樣發布，GitHub Pages 從 `master` 根目錄發布。線上驗證見上表。
 
 - 2026-10-27：**S1.2 第二批偏弱特效調亮調清楚**。全部 44 個用 `tools/fx-metrics.mjs` 量過後挑出：森羅治癒、心動回復（亮色像素只有 3–6%）、亮晶晶、聖輝加持（只佔畫布 7–8%）、疾風衝刺（線太細）、夏夜螢火（只有單點）。
   修正：`streaks` 圖層預設角度是爪痕用的 55°，衝刺的速度線和疾風的風弧沒有覆寫，結果全部斜的 → 兩個形態與風元素的點綴層都明確設 `angle: 0`（只改形態參數，引擎與配方格式不動）。
